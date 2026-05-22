@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Pastor Feedback Portal
+  </title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <link
+    rel="stylesheet"
+    href="css/styles.css"
+  >
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm">
+
+  <div class="container">
+
+    <a class="navbar-brand fw-bold" href="index.html">
+      RCCG Convert System
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse"
+      id="navbarNav"
+    >
+
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="index.html"
+          >
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="register.html"
+          >
+            Register Convert
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            href="feedback.html"
+          >
+            Pastor Feedback
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<!-- PAGE -->
+
+<div class="container py-5">
+
+  <div class="row justify-content-center">
+
+    <div class="col-lg-10">
+
+      <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-body p-5">
+
+          <h2 class="text-center text-danger fw-bold mb-2">
+            Pastor Feedback Portal
+          </h2>
+
+          <p class="text-center text-muted mb-5">
+            Kindly submit information about converts that visited your parish.
+          </p>
+
+          <!-- FORM -->
+
+          <form id="feedbackForm">
+
+            <div class="row g-4">
+
+              <!-- CONVERT NAME -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Convert Full Name
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="convert_name"
+                  required
+                >
+
+              </div>
+
+              <!-- CONVERT EMAIL -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Convert Email Address
+                </label>
+
+                <input
+                  type="email"
+                  class="form-control form-control-lg"
+                  id="convert_email"
+                >
+
+              </div>
+
+              <!-- CONVERT PHONE -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Convert Phone Number
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="convert_phone"
+                >
+
+              </div>
+
+              <!-- GENDER -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Gender
+                </label>
+
+                <select
+                  class="form-select form-select-lg"
+                  id="gender"
+                >
+
+                  <option value="">
+                    Select Gender
+                  </option>
+
+                  <option value="Male">
+                    Male
+                  </option>
+
+                  <option value="Female">
+                    Female
+                  </option>
+
+                </select>
+
+              </div>
+
+              <!-- STATE -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  State
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="state"
+                >
+
+              </div>
+
+              <!-- REGION -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Region
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="region"
+                >
+
+              </div>
+
+              <!-- ZONE -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Zone
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="zone"
+                >
+
+              </div>
+
+              <!-- PROVINCE -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Province
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="province"
+                >
+
+              </div>
+
+              <!-- LOCAL GOVERNMENT -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Local Government
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="local_government"
+                >
+
+              </div>
+
+              <!-- ADDRESS -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Address
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="address"
+                >
+
+              </div>
+
+              <!-- PARISH -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  RCCG Parish Name
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="parish_name"
+                  required
+                >
+
+              </div>
+
+              <!-- PASTOR -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Pastor Name
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="pastor_name"
+                  required
+                >
+
+              </div>
+
+              <!-- PASTOR EMAIL -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Pastor Email
+                </label>
+
+                <input
+                  type="email"
+                  class="form-control form-control-lg"
+                  id="pastor_email"
+                >
+
+              </div>
+
+              <!-- PASTOR PHONE -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Pastor Phone
+                </label>
+
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="pastor_phone"
+                >
+
+              </div>
+
+              <!-- VISITED -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Did the Convert Visit?
+                </label>
+
+                <select
+                  class="form-select form-select-lg"
+                  id="visited_church"
+                >
+
+                  <option value="">
+                    Select Option
+                  </option>
+
+                  <option value="true">
+                    Yes
+                  </option>
+
+                  <option value="false">
+                    No
+                  </option>
+
+                </select>
+
+              </div>
+
+              <!-- FOLLOW UP STATUS -->
+
+              <div class="col-md-6">
+
+                <label class="form-label fw-semibold">
+                  Follow-up Status
+                </label>
+
+                <select
+                  class="form-select form-select-lg"
+                  id="follow_up_status"
+                >
+
+                  <option value="Pending">
+                    Pending
+                  </option>
+
+                  <option value="Completed">
+                    Completed
+                  </option>
+
+                  <option value="In Progress">
+                    In Progress
+                  </option>
+
+                </select>
+
+              </div>
+
+              <!-- REMARK -->
+
+              <div class="col-md-12">
+
+                <label class="form-label fw-semibold">
+                  Pastor Remark
+                </label>
+
+                <textarea
+                  class="form-control form-control-lg"
+                  rows="4"
+                  id="pastor_remark"
+                ></textarea>
+
+              </div>
+
+            </div>
+
+            <!-- BUTTON -->
+
+            <div class="mt-5 d-grid">
+
+              <button
+                type="submit"
+                class="btn btn-danger btn-lg rounded-4"
+                id="submitBtn"
+              >
+                Submit Feedback
+              </button>
+
+            </div>
+
+          </form>
+
+          <!-- MESSAGE -->
+
+          <div
+            id="messageBox"
+            class="mt-4"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SUPABASE SCRIPT -->
+
+<script>
+
+// =========================
+// SUPABASE CONFIGURATION
+// =========================
+
+const SUPABASE_URL =
+  "https://etcybdblmcvdmesiekon.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0Y3liZGJsbWN2ZG1lc2lla29uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMzkwOTgsImV4cCI6MjA4MzcxNTA5OH0.0Wy2mBn-_-8Wn5x9Xedfjdf8Z_kblbd1_mlRSfJ9HSo";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+// =========================
+// FORM
+// =========================
+
+const feedbackForm =
+  document.getElementById("feedbackForm");
+
+const submitBtn =
+  document.getElementById("submitBtn");
+
+const messageBox =
+  document.getElementById("messageBox");
+
+// =========================
+// SUBMIT
+// =========================
+
+if (feedbackForm) {
+
+  feedbackForm.addEventListener(
+    "submit",
+    async function (e) {
+
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+
+      submitBtn.innerHTML = `
+        <span class="spinner-border spinner-border-sm"></span>
+        Submitting...
+      `;
+
+      messageBox.innerHTML = "";
+
+      // =========================
+      // PAYLOAD
+      // =========================
+
+      const payload = {
+
+        convert_name:
+          document.getElementById(
+            "convert_name"
+          ).value.trim(),
+
+        convert_email:
+          document.getElementById(
+            "convert_email"
+          ).value.trim(),
+
+        convert_phone:
+          document.getElementById(
+            "convert_phone"
+          ).value.trim(),
+
+        gender:
+          document.getElementById(
+            "gender"
+          ).value,
+
+        state:
+          document.getElementById(
+            "state"
+          ).value.trim(),
+
+        region:
+          document.getElementById(
+            "region"
+          ).value.trim(),
+
+        zone:
+          document.getElementById(
+            "zone"
+          ).value.trim(),
+
+        province:
+          document.getElementById(
+            "province"
+          ).value.trim(),
+
+        local_government:
+          document.getElementById(
+            "local_government"
+          ).value.trim(),
+
+        address:
+          document.getElementById(
+            "address"
+          ).value.trim(),
+
+        parish_name:
+          document.getElementById(
+            "parish_name"
+          ).value.trim(),
+
+        pastor_name:
+          document.getElementById(
+            "pastor_name"
+          ).value.trim(),
+
+        pastor_email:
+          document.getElementById(
+            "pastor_email"
+          ).value.trim(),
+
+        pastor_phone:
+          document.getElementById(
+            "pastor_phone"
+          ).value.trim(),
+
+        visited_church:
+          document.getElementById(
+            "visited_church"
+          ).value === "true",
+
+        follow_up_status:
+          document.getElementById(
+            "follow_up_status"
+          ).value,
+
+        pastor_remark:
+          document.getElementById(
+            "pastor_remark"
+          ).value.trim()
+
+      };
+
+      try {
+
+        // =========================
+        // INSERT TO SUPABASE
+        // =========================
+
+        const { error } =
+          await supabaseClient
+            .from("pastor_feedback")
+            .insert([payload]);
+
+        if (error) {
+          throw error;
+        }
+
+        // =========================
+        // SUCCESS
+        // =========================
+
+        feedbackForm.reset();
+
+        messageBox.innerHTML = `
+          <div class="alert alert-success rounded-4 shadow-sm">
+            Feedback submitted successfully.
+          </div>
+        `;
+
+      } catch (err) {
+
+        console.error(err);
+
+        messageBox.innerHTML = `
+          <div class="alert alert-danger rounded-4 shadow-sm">
+            ${err.message}
+          </div>
+        `;
+
+      }
+
+      submitBtn.disabled = false;
+
+      submitBtn.innerHTML =
+        "Submit Feedback";
+
+    }
+  );
+
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

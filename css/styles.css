@@ -1,0 +1,38 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+}
+
+.hero-section {
+  min-height: 90vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1400&auto=format&fit=crop');
+
+  background-size: cover;
+  background-position: center;
+}
+
+.card {
+  border-radius: 20px;
+}
+
+.form-control,
+.form-select {
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.btn {
+  border-radius: 12px;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}

@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    RCCG Admin Dashboard
+  </title>
+
+  <!-- BOOTSTRAP -->
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- CHART JS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- SHEETJS -->
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- ICONS -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  >
+
+  <style>
+
+    body {
+      background: #f4f6f9;
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar {
+      min-height: 100vh;
+      background: #b30000;
+      color: white;
+      padding: 30px 20px;
+    }
+
+    .sidebar h3 {
+      font-weight: bold;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .dashboard-card {
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .metric-icon {
+      font-size: 2rem;
+    }
+
+    .table-card {
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .chart-card {
+      border-radius: 20px;
+      border: none;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .topbar {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <!-- NAVBAR -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm">
+
+  <div class="container">
+
+    <a class="navbar-brand fw-bold" href="index.html">
+      RCCG Convert System
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse"
+      id="navbarNav"
+    >
+
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="index.html"
+          >
+            Home
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="register.html"
+          >
+            Register Convert
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="feedback.html"
+          >
+            Pastor Feedback
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="admin.html"
+          >
+            Admin Dashboard
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <!-- SIDEBAR -->
+
+    <div class="col-lg-2 sidebar">
+
+      <h3 class="mb-5">
+        RCCG Dashboard
+      </h3>
+
+      <a href="#">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+      </a>
+
+      <a href="#analyticsSection">
+        <i class="bi bi-bar-chart-line"></i>
+        Analytics
+      </a>
+
+      <a href="#reportSection">
+        <i class="bi bi-file-earmark-spreadsheet"></i>
+        Reports
+      </a>
+
+      <a href="#dataSection">
+        <i class="bi bi-table"></i>
+        Data Table
+      </a>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="col-lg-10 p-4">
+
+      <!-- TOPBAR -->
+
+      <div class="topbar mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+        <div>
+          <h2 class="fw-bold text-danger mb-1">
+            RCCG New Convert Analytics
+          </h2>
+
+          <p class="text-muted mb-0">
+            Comparative analysis of convert retention and parish follow-up.
+          </p>
+        </div>
+
+        <div>
+
+          <button
+            class="btn btn-success btn-lg rounded-4"
+            onclick="exportToExcel()"
+          >
+            <i class="bi bi-file-earmark-excel"></i>
+            Download Excel Report
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- METRICS -->
+
+      <div class="row g-4 mb-4">
+
+        <div class="col-md-3">
+
+          <div class="card dashboard-card p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+              <div>
+                <h6 class="text-muted">
+                  Total Converts
+                </h6>
+
+                <h2 id="totalConverts">
+                  0
+                </h2>
+              </div>
+
+              <div class="metric-icon text-primary">
+                <i class="bi bi-people-fill"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+          <div class="card dashboard-card p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+              <div>
+                <h6 class="text-muted">
+                  Visited Church
+                </h6>
+
+                <h2 id="visitedCount">
+                  0
+                </h2>
+              </div>
+
+              <div class="metric-icon text-success">
+                <i class="bi bi-check-circle-fill"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+          <div class="card dashboard-card p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+              <div>
+                <h6 class="text-muted">
+                  Yet To Visit
+                </h6>
+
+                <h2 id="notVisitedCount">
+                  0
+                </h2>
+              </div>
+
+              <div class="metric-icon text-danger">
+                <i class="bi bi-x-circle-fill"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+          <div class="card dashboard-card p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+              <div>
+                <h6 class="text-muted">
+                  Retention Rate
+                </h6>
+
+                <h2 id="retentionRate">
+                  0%
+                </h2>
+              </div>
+
+              <div class="metric-icon text-warning">
+                <i class="bi bi-graph-up-arrow"></i>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- CHARTS -->
+
+      <div
+        class="row g-4 mb-4"
+        id="analyticsSection"
+      >
+
+        <div class="col-lg-6">
+
+          <div class="card chart-card p-4">
+
+            <h5 class="fw-bold mb-4">
+              Converts By Region
+            </h5>
+
+            <canvas id="regionChart"></canvas>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="card chart-card p-4">
+
+            <h5 class="fw-bold mb-4">
+              Converts By Province
+            </h5>
+
+            <canvas id="provinceChart"></canvas>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="card chart-card p-4">
+
+            <h5 class="fw-bold mb-4">
+              Converts By Zone
+            </h5>
+
+            <canvas id="zoneChart"></canvas>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="card chart-card p-4">
+
+            <h5 class="fw-bold mb-4">
+              Parish Retention Analysis
+            </h5>
+
+            <canvas id="parishChart"></canvas>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SEARCH -->
+
+      <div class="card dashboard-card p-4 mb-4">
+
+        <div class="row g-3 align-items-center">
+
+          <div class="col-lg-8">
+
+            <input
+              type="text"
+              class="form-control form-control-lg"
+              placeholder="Search convert, parish, province, region..."
+              id="searchInput"
+            >
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <select
+              class="form-select form-select-lg"
+              id="statusFilter"
+            >
+
+              <option value="all">
+                All Status
+              </option>
+
+              <option value="visited">
+                Visited
+              </option>
+
+              <option value="not_visited">
+                Not Visited
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- TABLE -->
+
+      <div
+        class="card table-card shadow-sm"
+        id="dataSection"
+      >
+
+        <div class="card-body p-0">
+
+          <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+              <thead class="table-danger">
+
+                <tr>
+
+                  <th>Convert Name</th>
+                  <th>State</th>
+                  <th>Region</th>
+                  <th>Zone</th>
+                  <th>Province</th>
+                  <th>Parish</th>
+                  <th>Pastor</th>
+                  <th>Status</th>
+
+                </tr>
+
+              </thead>
+
+              <tbody id="feedbackTableBody">
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+
+<script>
+
+// =========================
+// SUPABASE
+// =========================
+
+const SUPABASE_URL =
+  "https://etcybdblmcvdmesiekon.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0Y3liZGJsbWN2ZG1lc2lla29uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMzkwOTgsImV4cCI6MjA4MzcxNTA5OH0.0Wy2mBn-_-8Wn5x9Xedfjdf8Z_kblbd1_mlRSfJ9HSo";
+
+const supabaseClient =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+// =========================
+// GLOBAL DATA
+// =========================
+
+let feedbackData = [];
+
+// =========================
+// LOAD DATA
+// =========================
+
+async function loadDashboard() {
+
+  const { data, error } =
+    await supabaseClient
+      .from("pastor_feedback")
+      .select("*")
+      .order("created_at", {
+        ascending: false
+      });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  feedbackData = data;
+
+  renderMetrics(data);
+  renderTable(data);
+  renderCharts(data);
+
+}
+
+// =========================
+// METRICS
+// =========================
+
+function renderMetrics(data) {
+
+  const total = data.length;
+
+  const visited =
+    data.filter(item =>
+      item.visited_church === true
+    ).length;
+
+  const notVisited =
+    total - visited;
+
+  const retention =
+    total > 0
+      ? ((visited / total) * 100).toFixed(1)
+      : 0;
+
+  document.getElementById(
+    "totalConverts"
+  ).innerText = total;
+
+  document.getElementById(
+    "visitedCount"
+  ).innerText = visited;
+
+  document.getElementById(
+    "notVisitedCount"
+  ).innerText = notVisited;
+
+  document.getElementById(
+    "retentionRate"
+  ).innerText = retention + "%";
+
+}
+
+// =========================
+// TABLE
+// =========================
+
+function renderTable(data) {
+
+  const tableBody =
+    document.getElementById(
+      "feedbackTableBody"
+    );
+
+  tableBody.innerHTML = "";
+
+  data.forEach(item => {
+
+    tableBody.innerHTML += `
+
+      <tr>
+
+        <td>${item.convert_name || "-"}</td>
+
+        <td>${item.state || "-"}</td>
+
+        <td>${item.region || "-"}</td>
+
+        <td>${item.zone || "-"}</td>
+
+        <td>${item.province || "-"}</td>
+
+        <td>${item.parish_name || "-"}</td>
+
+        <td>${item.pastor_name || "-"}</td>
+
+        <td>
+
+          ${item.visited_church
+            ? '<span class="badge bg-success">Visited</span>'
+            : '<span class="badge bg-danger">Not Visited</span>'}
+
+        </td>
+
+      </tr>
+
+    `;
+
+  });
+
+}
+
+// =========================
+// CHARTS
+// =========================
+
+function groupData(data, key) {
+
+  const grouped = {};
+
+  data.forEach(item => {
+
+    const value = item[key] || "Unknown";
+
+    grouped[value] =
+      (grouped[value] || 0) + 1;
+
+  });
+
+  return grouped;
+
+}
+
+function renderCharts(data) {
+
+  createChart(
+    "regionChart",
+    groupData(data, "region")
+  );
+
+  createChart(
+    "provinceChart",
+    groupData(data, "province")
+  );
+
+  createChart(
+    "zoneChart",
+    groupData(data, "zone")
+  );
+
+  createChart(
+    "parishChart",
+    groupData(data, "parish_name")
+  );
+
+}
+
+function createChart(id, groupedData) {
+
+  const ctx =
+    document.getElementById(id);
+
+  new Chart(ctx, {
+
+    type: "bar",
+
+    data: {
+
+      labels:
+        Object.keys(groupedData),
+
+      datasets: [{
+
+        label: "Converts",
+
+        data:
+          Object.values(groupedData),
+
+        borderWidth: 1
+
+      }]
+
+    },
+
+    options: {
+
+      responsive: true,
+
+      plugins: {
+
+        legend: {
+          display: false
+        }
+
+      }
+
+    }
+
+  });
+
+}
+
+// =========================
+// SEARCH
+// =========================
+
+const searchInput =
+  document.getElementById(
+    "searchInput"
+  );
+
+const statusFilter =
+  document.getElementById(
+    "statusFilter"
+  );
+
+function applyFilters() {
+
+  const search =
+    searchInput.value.toLowerCase();
+
+  const status =
+    statusFilter.value;
+
+  let filtered = feedbackData.filter(item => {
+
+    const text = `
+      ${item.convert_name}
+      ${item.state}
+      ${item.region}
+      ${item.zone}
+      ${item.province}
+      ${item.parish_name}
+    `.toLowerCase();
+
+    const matchesSearch =
+      text.includes(search);
+
+    let matchesStatus = true;
+
+    if (status === "visited") {
+      matchesStatus = item.visited_church === true;
+    }
+
+    if (status === "not_visited") {
+      matchesStatus = item.visited_church === false;
+    }
+
+    return matchesSearch && matchesStatus;
+
+  });
+
+  renderTable(filtered);
+
+}
+
+searchInput.addEventListener(
+  "keyup",
+  applyFilters
+);
+
+statusFilter.addEventListener(
+  "change",
+  applyFilters
+);
+
+// =========================
+// EXPORT EXCEL
+// =========================
+
+function exportToExcel() {
+
+  const worksheet =
+    XLSX.utils.json_to_sheet(
+      feedbackData
+    );
+
+  const workbook =
+    XLSX.utils.book_new();
+
+  XLSX.utils.book_append_sheet(
+    workbook,
+    worksheet,
+    "RCCG Report"
+  );
+
+  XLSX.writeFile(
+    workbook,
+    "RCCG_New_Convert_Report.xlsx"
+  );
+
+}
+
+// =========================
+// INIT
+// =========================
+
+loadDashboard();
+
+// =========================
+// ADMIN LOGIN SYSTEM
+// ONLY EMAILS IN ADMINS TABLE
+// =========================
+
+const adminLoginForm =
+  document.getElementById("adminLoginForm");
+
+if (adminLoginForm) {
+
+  adminLoginForm.addEventListener(
+    "submit",
+    async function (e) {
+
+      e.preventDefault();
+
+      const loginBtn =
+        document.getElementById("loginBtn");
+
+      const loginMessage =
+        document.getElementById("loginMessage");
+
+      loginBtn.disabled = true;
+
+      loginBtn.innerHTML = `
+        <span class="spinner-border spinner-border-sm"></span>
+        Authenticating...
+      `;
+
+      loginMessage.innerHTML = "";
+
+      const email =
+        document
+          .getElementById("adminEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("adminPassword")
+          .value;
+
+      try {
+
+        // =========================
+        // LOGIN TO SUPABASE AUTH
+        // =========================
+
+        const {
+          data,
+          error
+        } = await supabaseClient.auth.signInWithPassword({
+          email: email,
+          password: password
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        // =========================
+        // CHECK ADMINS TABLE
+        // =========================
+
+        const {
+          data: adminData,
+          error: adminError
+        } = await supabaseClient
+          .from("admins")
+          .select("*")
+          .eq("email", email)
+          .maybeSingle();
+
+        if (adminError) {
+          throw adminError;
+        }
+
+        // =========================
+        // NOT ADMIN
+        // =========================
+
+        if (!adminData) {
+
+          await supabaseClient.auth.signOut();
+
+          loginMessage.innerHTML = `
+            <div class="alert alert-danger rounded-4">
+              Access denied. You are not an admin.
+            </div>
+          `;
+
+          loginBtn.disabled = false;
+
+          loginBtn.innerHTML =
+            "Login";
+
+          return;
+
+        }
+
+        // =========================
+        // SAVE SESSION
+        // =========================
+
+        localStorage.setItem(
+          "adminLoggedIn",
+          "true"
+        );
+
+        localStorage.setItem(
+          "adminEmail",
+          email
+        );
+
+        // =========================
+        // REDIRECT
+        // =========================
+
+        window.location.href =
+          "admin.html";
+
+      } catch (err) {
+
+        console.error(err);
+
+        loginMessage.innerHTML = `
+          <div class="alert alert-danger rounded-4">
+            ${err.message}
+          </div>
+        `;
+
+        loginBtn.disabled = false;
+
+        loginBtn.innerHTML =
+          "Login";
+
+      }
+
+    }
+  );
+
+}
+
+// =========================
+// ADMIN PAGE PROTECTION
+// =========================
+
+const isAdminPage =
+  window.location.pathname.includes(
+    "admin.html"
+  );
+
+if (isAdminPage) {
+
+  const loggedIn =
+    localStorage.getItem(
+      "adminLoggedIn"
+    );
+
+  if (!loggedIn) {
+
+    window.location.href =
+      "login.html";
+
+  }
+
+}
+
+// =========================
+// LOGOUT SYSTEM
+// =========================
+
+async function logoutAdmin() {
+
+  await supabaseClient.auth.signOut();
+
+  localStorage.removeItem(
+    "adminLoggedIn"
+  );
+
+  localStorage.removeItem(
+    "adminEmail"
+  );
+
+  window.location.href =
+    "login.html";
+
+}
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
