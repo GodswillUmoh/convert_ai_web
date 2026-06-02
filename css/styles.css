@@ -36,3 +36,20 @@ body {
   background: rgba(255,255,255,0.1);
   border-radius: 10px;
 }
+
+
+
+.navbar .nav-link{
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.navbar .nav-link:hover{
+    background: rgba(255,255,255,0.15);
+    color: #fff !important;
+    transform: translateY(-1px);
+}
+
+.navbar-brand{
+    letter-spacing: 0.5px;
+}

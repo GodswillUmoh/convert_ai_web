@@ -109,193 +109,200 @@
 
           <!-- GOOGLE FORM SUBMISSION -->
 
-          <form
-            id="convertForm"
-            action="https://docs.google.com/forms/d/e/1FAIpQLSfxGehQmc0KfcchjclcnrJ_Qdl7k8SRQWj5XgFVantQkAGNng/formResponse"
-            method="POST"
-            target="_blank"
-          >
+<form
+  id="convertForm"
+  action="https://docs.google.com/forms/d/e/1FAIpQLSfxGehQmc0KfcchjclcnrJ_Qdl7k8SRQWj5XgFVantQkAGNng/formResponse"
+  method="POST"
+  target="hidden_iframe"
+>
 
-            <div class="row g-4">
+  <div class="row g-4">
 
-              <!-- FULL NAME -->
+    <!-- FULL NAME -->
 
-              <div class="col-md-6">
+    <div class="col-md-6">
 
-                <label class="form-label fw-semibold">
-                  Full Name
-                </label>
+      <label class="form-label fw-semibold">
+        Full Name
+      </label>
 
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  name="entry.140141326"
-                  required
-                >
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        name="entry.140141326"
+        required
+      >
 
-              </div>
+    </div>
 
-              <!-- EMAIL -->
+    <!-- EMAIL -->
 
-              <div class="col-md-6">
+    <div class="col-md-6">
 
-                <label class="form-label fw-semibold">
-                  Email Address
-                </label>
+      <label class="form-label fw-semibold">
+        Email Address
+      </label>
 
-                <input
-                  type="email"
-                  class="form-control form-control-lg"
-                  name="entry.1150866650"
-                  required
-                >
+      <input
+        type="email"
+        class="form-control form-control-lg"
+        name="entry.1150866650"
+        required
+      >
 
-              </div>
+    </div>
 
-              <!-- PHONE -->
+    <!-- PHONE -->
 
-              <div class="col-md-6">
+    <div class="col-md-6">
 
-                <label class="form-label fw-semibold">
-                  Phone Number
-                </label>
+      <label class="form-label fw-semibold">
+        Phone Number
+      </label>
 
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  name="entry.859141816"
-                >
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        name="entry.859141816"
+      >
 
-              </div>
+    </div>
 
-              <!-- GENDER -->
+    <!-- GENDER -->
 
-              <div class="col-md-6">
+    <div class="col-md-6">
 
-                <label class="form-label fw-semibold">
-                  Gender
-                </label>
+      <label class="form-label fw-semibold">
+        Gender
+      </label>
 
-                <select
-                  class="form-select form-select-lg"
-                  name="entry.1090811495"
-                >
+      <select
+        class="form-select form-select-lg"
+        name="entry.1090811495"
+      >
 
-                  <option value="">
-                    Select Gender
-                  </option>
+        <option value="">
+          Select Gender
+        </option>
 
-                  <option value="Male">
-                    Male
-                  </option>
+        <option value="Male">
+          Male
+        </option>
 
-                  <option value="Female">
-                    Female
-                  </option>
+        <option value="Female">
+          Female
+        </option>
 
-                </select>
+      </select>
 
-              </div>
+    </div>
 
-              <!-- STATE -->
+    <!-- STATE -->
 
-              <div class="col-md-6">
+    <div class="col-md-6">
 
-                <label class="form-label fw-semibold">
-                  State
-                </label>
+      <label class="form-label fw-semibold">
+        State
+      </label>
 
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  name="entry.1871222466"
-                >
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        name="entry.1871222466"
+      >
 
-              </div>
+    </div>
 
-              <!-- CITY -->
+    <!-- CITY -->
 
-              <div class="col-md-6">
+    <div class="col-md-6">
 
-                <label class="form-label fw-semibold">
-                  City
-                </label>
+      <label class="form-label fw-semibold">
+        City
+      </label>
 
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  name="entry.2068672242"
-                >
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        name="entry.2068672242"
+      >
 
-              </div>
+    </div>
 
-              <!-- LOCAL GOVERNMENT -->
+    <!-- LOCAL GOVERNMENT -->
 
-              <div class="col-md-12">
+    <div class="col-md-12">
 
-                <label class="form-label fw-semibold">
-                  Local Government
-                </label>
+      <label class="form-label fw-semibold">
+        Local Government
+      </label>
 
-                <input
-                  type="text"
-                  class="form-control form-control-lg"
-                  name="entry.93196047"
-                >
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        name="entry.93196047"
+      >
 
-              </div>
+    </div>
 
-              <!-- ADDRESS -->
+    <!-- ADDRESS -->
 
-              <div class="col-md-12">
+    <div class="col-md-12">
 
-                <label class="form-label fw-semibold">
-                  Home Address
-                </label>
+      <label class="form-label fw-semibold">
+        Home Address
+      </label>
 
-                <textarea
-                  class="form-control form-control-lg"
-                  name="entry.1584247366"
-                  rows="4"
-                ></textarea>
-
-              </div>
-
-            </div>
-
-            <!-- BUTTON -->
-
-            <div class="mt-5 d-grid">
-
-              <button
-                type="submit"
-                class="btn btn-danger btn-lg rounded-4"
-                id="submitBtn"
-              >
-                Submit Information
-              </button>
-
-            </div>
-
-          </form>
-
-          <!-- MESSAGE -->
-
-          <div
-            id="messageBox"
-            class="mt-4"
-          ></div>
-
-        </div>
-
-      </div>
+      <textarea
+        class="form-control form-control-lg"
+        name="entry.1584247366"
+        rows="4"
+      ></textarea>
 
     </div>
 
   </div>
 
+  <!-- BUTTON -->
+
+  <div class="mt-5 d-grid">
+
+    <button
+      type="submit"
+      class="btn btn-danger btn-lg rounded-4"
+      id="submitBtn"
+    >
+      Submit Information
+    </button>
+
+  </div>
+
+</form>
+
+<!-- Hidden iframe for silent Google Form submission -->
+
+<iframe
+  name="hidden_iframe"
+  id="hidden_iframe"
+  style="display:none;"
+></iframe>
+
+<!-- MESSAGE -->
+
+<div
+  id="messageBox"
+  class="mt-4"
+></div>
+
 </div>
 
+</div>
+
+</div>
+
+</div>
+
+</div>
 <!-- SIMPLE SUBMIT SCRIPT -->
 
 <script>
@@ -319,14 +326,13 @@ if (convertForm) {
         Submitting...
       `;
 
+      // Redirect after Google Form submission
       setTimeout(() => {
 
-        submitBtn.disabled = false;
+        window.location.href =
+          "success.html";
 
-        submitBtn.innerHTML =
-          "Submit Information";
-
-      }, 4000);
+      }, 2500);
 
     }
   );
@@ -334,7 +340,7 @@ if (convertForm) {
 }
 
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
