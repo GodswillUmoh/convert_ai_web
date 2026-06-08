@@ -3,30 +3,24 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <title>
-    Pastor Feedback Portal
-  </title>
+<title>Pastor Feedback Portal</title>
 
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+>
 
-  <link
-    rel="stylesheet"
-    href="css/styles.css"
-  >
-
-  <!-- SUPABASE -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link
+  rel="stylesheet"
+  href="css/styles.css"
+>
 
 </head>
 
@@ -59,28 +53,19 @@
       <ul class="navbar-nav ms-auto">
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            href="index.html"
-          >
+          <a class="nav-link" href="index.html">
             Home
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            href="register.html"
-          >
+          <a class="nav-link" href="register.html">
             Register Convert
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link active"
-            href="feedback.html"
-          >
+          <a class="nav-link active" href="feedback.html">
             Pastor Feedback
           </a>
         </li>
@@ -113,94 +98,90 @@
             Kindly submit information about converts that visited your parish.
           </p>
 
-          <!-- FORM -->
-
-          <form id="feedbackForm">
+          <form
+            id="feedbackForm"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSeCxVXeBVi_GXZUOYPDtGYc67lhoZnwRkKsGhPMXjCEVL07Ug/formResponse"
+            method="POST"
+            target="hidden_iframe"
+          >
 
             <div class="row g-4">
 
-              <!-- CONVERT NAME -->
+              <!-- Convert Name -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Convert Full Name
                 </label>
-
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="convert_name"
+                  name="entry.716027578"
                   required
                 >
-
               </div>
 
-              <!-- CONVERT EMAIL -->
+              <!-- Email -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Convert Email Address
                 </label>
-
                 <input
                   type="email"
                   class="form-control form-control-lg"
-                  id="convert_email"
+                  name="entry.1966869854"
                 >
-
               </div>
 
-              <!-- CONVERT PHONE -->
+              <!-- Phone -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Convert Phone Number
                 </label>
-
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="convert_phone"
+                  name="entry.83016501"
                 >
-
               </div>
 
-              <!-- GENDER -->
+              <!-- Gender -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Gender
                 </label>
 
                 <select
                   class="form-select form-select-lg"
-                  id="gender"
+                  name="entry.540175709"
                 >
-
-                  <option value="">
-                    Select Gender
-                  </option>
-
-                  <option value="Male">
-                    Male
-                  </option>
-
-                  <option value="Female">
-                    Female
-                  </option>
-
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
                 </select>
-
               </div>
 
-              <!-- STATE -->
+              <!-- Country -->
 
               <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  Country
+                </label>
 
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  name="entry.1805903394"
+                  value="Nigeria"
+                >
+              </div>
+
+              <!-- State -->
+
+              <div class="col-md-6">
                 <label class="form-label fw-semibold">
                   State
                 </label>
@@ -208,15 +189,27 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="state"
+                  name="entry.592519137"
                 >
-
               </div>
 
-              <!-- REGION -->
+              <!-- City -->
 
               <div class="col-md-6">
+                <label class="form-label fw-semibold">
+                  City
+                </label>
 
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  name="entry.1270074033"
+                >
+              </div>
+
+              <!-- Region -->
+
+              <div class="col-md-6">
                 <label class="form-label fw-semibold">
                   Region
                 </label>
@@ -224,15 +217,13 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="region"
+                  name="entry.1529263853"
                 >
-
               </div>
 
-              <!-- ZONE -->
+              <!-- Zone -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Zone
                 </label>
@@ -240,15 +231,13 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="zone"
+                  name="entry.1597176789"
                 >
-
               </div>
 
-              <!-- PROVINCE -->
+              <!-- Province -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Province
                 </label>
@@ -256,15 +245,13 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="province"
+                  name="entry.1320051374"
                 >
-
               </div>
 
-              <!-- LOCAL GOVERNMENT -->
+              <!-- Local Government -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Local Government
                 </label>
@@ -272,15 +259,13 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="local_government"
+                  name="entry.1181476120"
                 >
-
               </div>
 
-              <!-- ADDRESS -->
+              <!-- Address -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Address
                 </label>
@@ -288,15 +273,13 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="address"
+                  name="entry.1824948538"
                 >
-
               </div>
 
-              <!-- PARISH -->
+              <!-- Parish -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   RCCG Parish Name
                 </label>
@@ -304,16 +287,14 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="parish_name"
+                  name="entry.630627375"
                   required
                 >
-
               </div>
 
-              <!-- PASTOR -->
+              <!-- Pastor Name -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Pastor Name
                 </label>
@@ -321,16 +302,14 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="pastor_name"
+                  name="entry.1849274708"
                   required
                 >
-
               </div>
 
-              <!-- PASTOR EMAIL -->
+              <!-- Pastor Email -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Pastor Email
                 </label>
@@ -338,15 +317,13 @@
                 <input
                   type="email"
                   class="form-control form-control-lg"
-                  id="pastor_email"
+                  name="entry.1610668247"
                 >
-
               </div>
 
-              <!-- PASTOR PHONE -->
+              <!-- Pastor Phone -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Pastor Phone
                 </label>
@@ -354,73 +331,56 @@
                 <input
                   type="text"
                   class="form-control form-control-lg"
-                  id="pastor_phone"
+                  name="entry.1286409204"
                 >
-
               </div>
 
-              <!-- VISITED -->
+              <!-- Visit -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Did the Convert Visit?
                 </label>
 
                 <select
                   class="form-select form-select-lg"
-                  id="visited_church"
+                  name="entry.334480027"
                 >
-
-                  <option value="">
-                    Select Option
-                  </option>
-
-                  <option value="true">
-                    Yes
-                  </option>
-
-                  <option value="false">
-                    No
-                  </option>
-
+                  <option value="">Select Option</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
                 </select>
-
               </div>
 
-              <!-- FOLLOW UP STATUS -->
+              <!-- Follow Up -->
 
               <div class="col-md-6">
-
                 <label class="form-label fw-semibold">
                   Follow-up Status
                 </label>
 
                 <select
                   class="form-select form-select-lg"
-                  id="follow_up_status"
+                  name="entry.2107888472"
                 >
-
-                  <option value="Pending">
-                    Pending
-                  </option>
-
-                  <option value="Completed">
-                    Completed
-                  </option>
-
-                  <option value="In Progress">
+                  <option value="in-progress">
                     In Progress
                   </option>
 
-                </select>
+                  <option value="completed">
+                    Completed
+                  </option>
 
+                  <option value="unreachable">
+                    Unreachable
+                  </option>
+
+                </select>
               </div>
 
-              <!-- REMARK -->
+              <!-- Remark -->
 
               <div class="col-md-12">
-
                 <label class="form-label fw-semibold">
                   Pastor Remark
                 </label>
@@ -428,14 +388,13 @@
                 <textarea
                   class="form-control form-control-lg"
                   rows="4"
-                  id="pastor_remark"
+                  name="entry.1083178585"
                 ></textarea>
-
               </div>
 
             </div>
 
-            <!-- BUTTON -->
+            <!-- Submit -->
 
             <div class="mt-5 d-grid">
 
@@ -451,7 +410,15 @@
 
           </form>
 
-          <!-- MESSAGE -->
+          <!-- Hidden iframe -->
+
+          <iframe
+            name="hidden_iframe"
+            id="hidden_iframe"
+            style="display:none;"
+          ></iframe>
+
+          <!-- Messages -->
 
           <div
             id="messageBox"
@@ -468,206 +435,54 @@
 
 </div>
 
-<!-- SUPABASE SCRIPT -->
-
 <script>
 
-// =========================
-// SUPABASE CONFIGURATION
-// =========================
+const feedbackForm = document.getElementById("feedbackForm");
+const submitBtn = document.getElementById("submitBtn");
+const messageBox = document.getElementById("messageBox");
 
-const SUPABASE_URL =
-  "https://etcybdblmcvdmesiekon.supabase.co";
+let submitted = false;
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0Y3liZGJsbWN2ZG1lc2lla29uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMzkwOTgsImV4cCI6MjA4MzcxNTA5OH0.0Wy2mBn-_-8Wn5x9Xedfjdf8Z_kblbd1_mlRSfJ9HSo";
+feedbackForm.addEventListener("submit", function() {
 
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+  submitted = true;
 
-// =========================
-// FORM
-// =========================
+  submitBtn.disabled = true;
 
-const feedbackForm =
-  document.getElementById("feedbackForm");
+  submitBtn.innerHTML = `
+    <span class="spinner-border spinner-border-sm"></span>
+    Submitting...
+  `;
 
-const submitBtn =
-  document.getElementById("submitBtn");
+});
 
-const messageBox =
-  document.getElementById("messageBox");
+document.getElementById("hidden_iframe").addEventListener("load", function() {
 
-// =========================
-// SUBMIT
-// =========================
+  if (!submitted) return;
 
-if (feedbackForm) {
+  messageBox.innerHTML = `
+    <div class="alert alert-success rounded-4 shadow-sm">
+      <strong>Success!</strong><br>
+      Feedback submitted successfully.
+    </div>
+  `;
 
-  feedbackForm.addEventListener(
-    "submit",
-    async function (e) {
+  feedbackForm.reset();
 
-      e.preventDefault();
+  submitBtn.disabled = false;
+  submitBtn.innerHTML = "Submit Feedback";
 
-      submitBtn.disabled = true;
+  submitted = false;
 
-      submitBtn.innerHTML = `
-        <span class="spinner-border spinner-border-sm"></span>
-        Submitting...
-      `;
+  setTimeout(() => {
+    window.location.href = "success.html";
+  }, 2500);
 
-      messageBox.innerHTML = "";
-
-      // =========================
-      // PAYLOAD
-      // =========================
-
-      const payload = {
-
-        convert_name:
-          document.getElementById(
-            "convert_name"
-          ).value.trim(),
-
-        convert_email:
-          document.getElementById(
-            "convert_email"
-          ).value.trim(),
-
-        convert_phone:
-          document.getElementById(
-            "convert_phone"
-          ).value.trim(),
-
-        gender:
-          document.getElementById(
-            "gender"
-          ).value,
-
-        state:
-          document.getElementById(
-            "state"
-          ).value.trim(),
-
-        region:
-          document.getElementById(
-            "region"
-          ).value.trim(),
-
-        zone:
-          document.getElementById(
-            "zone"
-          ).value.trim(),
-
-        province:
-          document.getElementById(
-            "province"
-          ).value.trim(),
-
-        local_government:
-          document.getElementById(
-            "local_government"
-          ).value.trim(),
-
-        address:
-          document.getElementById(
-            "address"
-          ).value.trim(),
-
-        parish_name:
-          document.getElementById(
-            "parish_name"
-          ).value.trim(),
-
-        pastor_name:
-          document.getElementById(
-            "pastor_name"
-          ).value.trim(),
-
-        pastor_email:
-          document.getElementById(
-            "pastor_email"
-          ).value.trim(),
-
-        pastor_phone:
-          document.getElementById(
-            "pastor_phone"
-          ).value.trim(),
-
-        visited_church:
-          document.getElementById(
-            "visited_church"
-          ).value === "true",
-
-        follow_up_status:
-          document.getElementById(
-            "follow_up_status"
-          ).value,
-
-        pastor_remark:
-          document.getElementById(
-            "pastor_remark"
-          ).value.trim()
-
-      };
-
-      try {
-
-        // =========================
-        // INSERT TO SUPABASE
-        // =========================
-
-        const { error } =
-          await supabaseClient
-            .from("pastor_feedback")
-            .insert([payload]);
-
-        if (error) {
-          throw error;
-        }
-
-        // =========================
-        // SUCCESS
-        // =========================
-
-        feedbackForm.reset();
-
-        messageBox.innerHTML = `
-          <div class="alert alert-success rounded-4 shadow-sm">
-            Feedback submitted successfully.
-          </div>
-        `;
-
-      } catch (err) {
-
-        console.error(err);
-
-        messageBox.innerHTML = `
-          <div class="alert alert-danger rounded-4 shadow-sm">
-            ${err.message}
-          </div>
-        `;
-
-      }
-
-      submitBtn.disabled = false;
-
-      submitBtn.innerHTML =
-        "Submit Feedback";
-
-    }
-  );
-
-}
+});
 
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
