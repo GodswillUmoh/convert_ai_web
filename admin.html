@@ -2,1038 +2,422 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <title>RCCG Admin Dashboard</title>
 
-  <title>
-    RCCG Admin Dashboard
-  </title>
-
-  <!-- BOOTSTRAP -->
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
-
-  <!-- CHART JS -->
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- SHEETJS -->
-
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-  <!-- SUPABASE -->
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- ICONS -->
-
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-  >
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <style>
+    :root {
+      --brand: #b30000;
+      --brand-dark: #7f0000;
+      --ink: #1f2937;
+      --line: #e5e7eb;
+      --surface: #ffffff;
+      --page: #f5f7fb;
+    }
 
     body {
-      background: #f4f6f9;
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
       font-family: Arial, sans-serif;
     }
 
-    .sidebar {
+    .app-shell {
       min-height: 100vh;
-      background: #b30000;
-      color: white;
-      padding: 30px 20px;
     }
 
-    .sidebar h3 {
-      font-weight: bold;
+    .sidebar {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--brand), var(--brand-dark));
+      color: #fff;
+      padding: 28px 20px;
     }
 
-    .sidebar a {
-      display: block;
-      color: white;
+    .brand-mark {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 1.35rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.86);
       text-decoration: none;
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      transition: 0.3s;
+      padding: 11px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-weight: 600;
     }
 
-    .sidebar a:hover {
-      background: rgba(255,255,255,0.2);
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
     }
 
-    .dashboard-card {
-      border: none;
-      border-radius: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-      transition: 0.3s;
-    }
-
-    .dashboard-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .metric-icon {
-      font-size: 2rem;
-    }
-
-    .table-card {
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    .chart-card {
-      border-radius: 20px;
-      border: none;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    .main-panel {
+      padding: 28px;
     }
 
     .topbar {
-      background: white;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(31, 41, 55, 0.06);
+      padding: 18px 20px;
     }
 
-  </style>
+    .eyebrow {
+      color: var(--brand);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
 
+    .report-frame-wrap {
+      height: min(920px, calc(100vh - 132px));
+      min-height: 680px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(31, 41, 55, 0.08);
+    }
+
+    .report-frame-wrap iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 0;
+    }
+
+    .stat-card {
+      min-height: 116px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(31, 41, 55, 0.05);
+    }
+
+    .stat-card i {
+      color: var(--brand);
+      font-size: 1.45rem;
+    }
+
+    .metric-status {
+      min-height: 22px;
+    }
+
+    .btn {
+      border-radius: 8px;
+    }
+
+    .btn-danger {
+      background: var(--brand);
+      border-color: var(--brand);
+    }
+
+    .btn-danger:hover {
+      background: var(--brand-dark);
+      border-color: var(--brand-dark);
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        position: static;
+        min-height: auto;
+      }
+
+      .sidebar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .sidebar-nav a {
+        margin-bottom: 0;
+      }
+
+      .main-panel {
+        padding: 18px;
+      }
+
+      .report-frame-wrap {
+        height: 760px;
+        min-height: 620px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <!-- NAVBAR -->
+  <div class="container-fluid app-shell">
+    <div class="row">
+      <aside class="col-lg-2 sidebar">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <span class="brand-mark">
+            <i class="bi bi-speedometer2"></i>
+          </span>
+          <div>
+            <h1 class="h5 fw-bold mb-0">RCCG Admin</h1>
+            <p class="mb-0 small text-white-50">Convert System</p>
+          </div>
+        </div>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow-sm">
-
-  <div class="container">
-
-    <a class="navbar-brand fw-bold" href="index.html">
-      RCCG Convert System
-    </a>
-
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div
-      class="collapse navbar-collapse"
-      id="navbarNav"
-    >
-
-      <ul class="navbar-nav ms-auto">
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            href="index.html"
-          >
+        <nav class="sidebar-nav">
+          <a class="active" href="#lookerReport">
+            <i class="bi bi-bar-chart-line"></i>
+            Analytics
+          </a>
+          <a href="index.html">
+            <i class="bi bi-house"></i>
             Home
           </a>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            href="register.html"
-          >
-            Register Convert
+          <a href="register.html">
+            <i class="bi bi-person-plus"></i>
+            Register
           </a>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            href="feedback.html"
-          >
-            Pastor Feedback
+          <a href="feedback.html">
+            <i class="bi bi-chat-square-text"></i>
+            Feedback
           </a>
-        </li>
-
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            href="admin.html"
-          >
-            Admin Dashboard
+          <a href="#" onclick="logoutAdmin(); return false;">
+            <i class="bi bi-box-arrow-right"></i>
+            Logout
           </a>
-        </li>
+        </nav>
+      </aside>
 
-      </ul>
+      <main class="col-lg-10 main-panel">
+        <section class="topbar mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+          <div>
+            <div class="eyebrow mb-1">Live Centralized Dashboard Report</div>
+            <h2 class="fw-bold mb-1">New Convert Analytics</h2>
+            <p class="text-muted mb-0">Figures are displayed directly from the connected Live databases.</p>
+          </div>
 
-    </div>
-
-  </div>
-
-</nav>
-
-<div class="container-fluid">
-
-  <div class="row">
-
-    <!-- SIDEBAR -->
-
-    <div class="col-lg-2 sidebar">
-
-      <h3 class="mb-5">
-        RCCG Dashboard
-      </h3>
-
-      <a href="#">
-        <i class="bi bi-speedometer2"></i>
-        Dashboard
-      </a>
-
-      <a href="#analyticsSection">
-        <i class="bi bi-bar-chart-line"></i>
-        Analytics
-      </a>
-
-      <a href="#reportSection">
-        <i class="bi bi-file-earmark-spreadsheet"></i>
-        Reports
-      </a>
-
-      <a href="#dataSection">
-        <i class="bi bi-table"></i>
-        Data Table
-      </a>
-
-    </div>
-
-    <!-- MAIN -->
-
-    <div class="col-lg-10 p-4">
-
-      <!-- TOPBAR -->
-
-      <div class="topbar mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
-
-        <div>
-          <h2 class="fw-bold text-danger mb-1">
-            RCCG New Convert Analytics
-          </h2>
-
-          <p class="text-muted mb-0">
-            Comparative analysis of convert retention and parish follow-up.
-          </p>
-        </div>
-
-        <div>
-
-          <button
-            class="btn btn-success btn-lg rounded-4"
-            onclick="exportToExcel()"
-          >
-            <i class="bi bi-file-earmark-excel"></i>
-            Download Excel Report
+          <button class="btn btn-danger" type="button" onclick="refreshDashboard()">
+            <i class="bi bi-arrow-clockwise"></i>
+            Refresh Dashboard
           </button>
+        </section>
 
-        </div>
+        <section id="lookerReport" class="mb-4">
+          <div class="report-frame-wrap">
+            <iframe
+              id="lookerFrame"
+              width="1200"
+              height="900"
+              src="https://datastudio.google.com/embed/reporting/e1d9288c-1125-4b8d-a87f-db7c0aa0b767/page/vCd0F"
+              frameborder="0"
+              style="border:0"
+              allowfullscreen
+              sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+            </iframe>
+          </div>
+        </section>
 
-      </div>
-
-      <!-- METRICS -->
-
-      <div class="row g-4 mb-4">
-
-        <div class="col-md-3">
-
-          <div class="card dashboard-card p-4">
-
-            <div class="d-flex justify-content-between align-items-center">
-
+        <section class="row g-3" aria-label="Google Sheet summary metrics">
+          <div class="col-md-6 col-xl-3">
+            <div class="stat-card d-flex justify-content-between align-items-center">
               <div>
-                <h6 class="text-muted">
-                  Total Converts
-                </h6>
-
-                <h2 id="totalConverts">
-                  0
-                </h2>
+                <p class="text-muted mb-1">Total Converts</p>
+                <h3 id="totalConverts" class="fw-bold mb-0">0</h3>
+                <span class="small text-muted">Redemption Camp records</span>
               </div>
-
-              <div class="metric-icon text-primary">
-                <i class="bi bi-people-fill"></i>
-              </div>
-
+              <i class="bi bi-people-fill"></i>
             </div>
-
           </div>
 
-        </div>
-
-        <div class="col-md-3">
-
-          <div class="card dashboard-card p-4">
-
-            <div class="d-flex justify-content-between align-items-center">
-
+          <div class="col-md-6 col-xl-3">
+            <div class="stat-card d-flex justify-content-between align-items-center">
               <div>
-                <h6 class="text-muted">
-                  Visited Church
-                </h6>
-
-                <h2 id="visitedCount">
-                  0
-                </h2>
+                <p class="text-muted mb-1">Visited Church</p>
+                <h3 id="visitedCount" class="fw-bold mb-0">0</h3>
+                <span class="small text-muted">Pastor feedback records</span>
               </div>
-
-              <div class="metric-icon text-success">
-                <i class="bi bi-check-circle-fill"></i>
-              </div>
-
+              <i class="bi bi-check-circle-fill"></i>
             </div>
-
           </div>
 
-        </div>
-
-        <div class="col-md-3">
-
-          <div class="card dashboard-card p-4">
-
-            <div class="d-flex justify-content-between align-items-center">
-
+          <div class="col-md-6 col-xl-3">
+            <div class="stat-card d-flex justify-content-between align-items-center">
               <div>
-                <h6 class="text-muted">
-                  Yet To Visit
-                </h6>
-
-                <h2 id="notVisitedCount">
-                  0
-                </h2>
+                <p class="text-muted mb-1">Yet To Visit</p>
+                <h3 id="notVisitedCount" class="fw-bold mb-0">0</h3>
+                <span class="small text-muted">Total minus visited</span>
               </div>
-
-              <div class="metric-icon text-danger">
-                <i class="bi bi-x-circle-fill"></i>
-              </div>
-
+              <i class="bi bi-exclamation-circle-fill"></i>
             </div>
-
           </div>
 
-        </div>
-
-        <div class="col-md-3">
-
-          <div class="card dashboard-card p-4">
-
-            <div class="d-flex justify-content-between align-items-center">
-
+          <div class="col-md-6 col-xl-3">
+            <div class="stat-card d-flex justify-content-between align-items-center">
               <div>
-                <h6 class="text-muted">
-                  Retention Rate
-                </h6>
-
-                <h2 id="retentionRate">
-                  0%
-                </h2>
+                <p class="text-muted mb-1">Visited Rate</p>
+                <h3 id="visitedRate" class="fw-bold mb-0">0%</h3>
+                <span class="small text-muted">Visited / total</span>
               </div>
-
-              <div class="metric-icon text-warning">
-                <i class="bi bi-graph-up-arrow"></i>
-              </div>
-
+              <i class="bi bi-percent"></i>
             </div>
-
           </div>
 
-        </div>
-
-      </div>
-
-      <!-- CHARTS -->
-
-      <div
-        class="row g-4 mb-4"
-        id="analyticsSection"
-      >
-
-        <div class="col-lg-6">
-
-          <div class="card chart-card p-4">
-
-            <h5 class="fw-bold mb-4">
-              Converts By Region
-            </h5>
-
-            <canvas id="regionChart"></canvas>
-
+          <div class="col-12">
+            <p id="metricStatus" class="metric-status small text-muted mb-0"></p>
           </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card chart-card p-4">
-
-            <h5 class="fw-bold mb-4">
-              Converts By Province
-            </h5>
-
-            <canvas id="provinceChart"></canvas>
-
-          </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card chart-card p-4">
-
-            <h5 class="fw-bold mb-4">
-              Converts By Zone
-            </h5>
-
-            <canvas id="zoneChart"></canvas>
-
-          </div>
-
-        </div>
-
-        <div class="col-lg-6">
-
-          <div class="card chart-card p-4">
-
-            <h5 class="fw-bold mb-4">
-              Parish Retention Analysis
-            </h5>
-
-            <canvas id="parishChart"></canvas>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- SEARCH -->
-
-      <div class="card dashboard-card p-4 mb-4">
-
-        <div class="row g-3 align-items-center">
-
-          <div class="col-lg-8">
-
-            <input
-              type="text"
-              class="form-control form-control-lg"
-              placeholder="Search convert, parish, province, region..."
-              id="searchInput"
-            >
-
-          </div>
-
-          <div class="col-lg-4">
-
-            <select
-              class="form-select form-select-lg"
-              id="statusFilter"
-            >
-
-              <option value="all">
-                All Status
-              </option>
-
-              <option value="visited">
-                Visited
-              </option>
-
-              <option value="not_visited">
-                Not Visited
-              </option>
-
-            </select>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- TABLE -->
-
-      <div
-        class="card table-card shadow-sm"
-        id="dataSection"
-      >
-
-        <div class="card-body p-0">
-
-          <div class="table-responsive">
-
-            <table class="table table-hover align-middle mb-0">
-
-              <thead class="table-danger">
-
-                <tr>
-
-                  <th>Convert Name</th>
-                  <th>State</th>
-                  <th>Region</th>
-                  <th>Zone</th>
-                  <th>Province</th>
-                  <th>Parish</th>
-                  <th>Pastor</th>
-                  <th>Status</th>
-
-                </tr>
-
-              </thead>
-
-              <tbody id="feedbackTableBody">
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </div>
-
+        </section>
+      </main>
     </div>
-
   </div>
 
-</div>
+  <script>
+    const LIVE_REFRESH_INTERVAL_MS = 30000;
+    const TOTAL_CONVERT_SHEET_ID = "1uUvoyH8xGhd_UuDheosXgqq2fcogSin-_MaAQZ8abds";
+    const VISITED_CHURCH_SHEET_ID = "16cvbzQZ_eeAsU2CYvGtvfevdgEjqyunp6y4Ybrm9JnI";
 
-<!-- SCRIPT -->
+    function getSheetCsvUrl(sheetId) {
+      return `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&cacheBust=${Date.now()}`;
+    }
 
-<script>
+    function refreshReport() {
+      const lookerFrame = document.getElementById("lookerFrame");
+      lookerFrame.src = lookerFrame.src;
+    }
 
-// =========================
-// SUPABASE
-// =========================
+    function parseCsv(csvText) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
 
-const SUPABASE_URL =
-  "https://etcybdblmcvdmesiekon.supabase.co";
+      for (let index = 0; index < csvText.length; index++) {
+        const char = csvText[index];
+        const nextChar = csvText[index + 1];
 
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV0Y3liZGJsbWN2ZG1lc2lla29uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgxMzkwOTgsImV4cCI6MjA4MzcxNTA5OH0.0Wy2mBn-_-8Wn5x9Xedfjdf8Z_kblbd1_mlRSfJ9HSo";
+        if (char === '"' && inQuotes && nextChar === '"') {
+          cell += '"';
+          index++;
+          continue;
+        }
 
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
-  );
+        if (char === '"') {
+          inQuotes = !inQuotes;
+          continue;
+        }
 
-// =========================
-// GLOBAL DATA
-// =========================
+        if (char === "," && !inQuotes) {
+          row.push(cell);
+          cell = "";
+          continue;
+        }
 
-let feedbackData = [];
+        if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && nextChar === "\n") {
+            index++;
+          }
 
-// =========================
-// LOAD DATA
-// =========================
+          row.push(cell);
+          rows.push(row);
+          row = [];
+          cell = "";
+          continue;
+        }
 
-async function loadDashboard() {
+        cell += char;
+      }
 
-  const { data, error } =
-    await supabaseClient
-      .from("pastor_feedback")
-      .select("*")
-      .order("created_at", {
-        ascending: false
+      row.push(cell);
+      rows.push(row);
+
+      return rows;
+    }
+
+    async function getSheetRecordCount(sheetId) {
+      const response = await fetch(getSheetCsvUrl(sheetId), {
+        cache: "no-store"
       });
 
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  feedbackData = data;
-
-  renderMetrics(data);
-  renderTable(data);
-  renderCharts(data);
-
-}
-
-// =========================
-// METRICS
-// =========================
-
-function renderMetrics(data) {
-
-  const total = data.length;
-
-  const visited =
-    data.filter(item =>
-      item.visited_church === true
-    ).length;
-
-  const notVisited =
-    total - visited;
-
-  const retention =
-    total > 0
-      ? ((visited / total) * 100).toFixed(1)
-      : 0;
-
-  document.getElementById(
-    "totalConverts"
-  ).innerText = total;
-
-  document.getElementById(
-    "visitedCount"
-  ).innerText = visited;
-
-  document.getElementById(
-    "notVisitedCount"
-  ).innerText = notVisited;
-
-  document.getElementById(
-    "retentionRate"
-  ).innerText = retention + "%";
-
-}
-
-// =========================
-// TABLE
-// =========================
-
-function renderTable(data) {
-
-  const tableBody =
-    document.getElementById(
-      "feedbackTableBody"
-    );
-
-  tableBody.innerHTML = "";
-
-  data.forEach(item => {
-
-    tableBody.innerHTML += `
-
-      <tr>
-
-        <td>${item.convert_name || "-"}</td>
-
-        <td>${item.state || "-"}</td>
-
-        <td>${item.region || "-"}</td>
-
-        <td>${item.zone || "-"}</td>
-
-        <td>${item.province || "-"}</td>
-
-        <td>${item.parish_name || "-"}</td>
-
-        <td>${item.pastor_name || "-"}</td>
-
-        <td>
-
-          ${item.visited_church
-            ? '<span class="badge bg-success">Visited</span>'
-            : '<span class="badge bg-danger">Not Visited</span>'}
-
-        </td>
-
-      </tr>
-
-    `;
-
-  });
-
-}
-
-// =========================
-// CHARTS
-// =========================
-
-function groupData(data, key) {
-
-  const grouped = {};
-
-  data.forEach(item => {
-
-    const value = item[key] || "Unknown";
-
-    grouped[value] =
-      (grouped[value] || 0) + 1;
-
-  });
-
-  return grouped;
-
-}
-
-function renderCharts(data) {
-
-  createChart(
-    "regionChart",
-    groupData(data, "region")
-  );
-
-  createChart(
-    "provinceChart",
-    groupData(data, "province")
-  );
-
-  createChart(
-    "zoneChart",
-    groupData(data, "zone")
-  );
-
-  createChart(
-    "parishChart",
-    groupData(data, "parish_name")
-  );
-
-}
-
-function createChart(id, groupedData) {
-
-  const ctx =
-    document.getElementById(id);
-
-  new Chart(ctx, {
-
-    type: "bar",
-
-    data: {
-
-      labels:
-        Object.keys(groupedData),
-
-      datasets: [{
-
-        label: "Converts",
-
-        data:
-          Object.values(groupedData),
-
-        borderWidth: 1
-
-      }]
-
-    },
-
-    options: {
-
-      responsive: true,
-
-      plugins: {
-
-        legend: {
-          display: false
-        }
-
+      if (!response.ok) {
+        throw new Error(`Google Sheet request failed with status ${response.status}`);
       }
 
+      const csvText = await response.text();
+      const rows = parseCsv(csvText).filter(row =>
+        row.some(cell => cell.trim() !== "")
+      );
+
+      return Math.max(rows.length - 1, 0);
     }
 
-  });
+    function renderMetrics(totalConverts, visitedChurch) {
+      const yetToVisit = Math.max(totalConverts - visitedChurch, 0);
+      const visitedRate = totalConverts > 0
+        ? ((visitedChurch / totalConverts) * 100).toFixed(1)
+        : "0.0";
 
-}
-
-// =========================
-// SEARCH
-// =========================
-
-const searchInput =
-  document.getElementById(
-    "searchInput"
-  );
-
-const statusFilter =
-  document.getElementById(
-    "statusFilter"
-  );
-
-function applyFilters() {
-
-  const search =
-    searchInput.value.toLowerCase();
-
-  const status =
-    statusFilter.value;
-
-  let filtered = feedbackData.filter(item => {
-
-    const text = `
-      ${item.convert_name}
-      ${item.state}
-      ${item.region}
-      ${item.zone}
-      ${item.province}
-      ${item.parish_name}
-    `.toLowerCase();
-
-    const matchesSearch =
-      text.includes(search);
-
-    let matchesStatus = true;
-
-    if (status === "visited") {
-      matchesStatus = item.visited_church === true;
+      document.getElementById("totalConverts").innerText = totalConverts;
+      document.getElementById("visitedCount").innerText = visitedChurch;
+      document.getElementById("notVisitedCount").innerText = yetToVisit;
+      document.getElementById("visitedRate").innerText = `${visitedRate}%`;
     }
 
-    if (status === "not_visited") {
-      matchesStatus = item.visited_church === false;
-    }
-
-    return matchesSearch && matchesStatus;
-
-  });
-
-  renderTable(filtered);
-
-}
-
-searchInput.addEventListener(
-  "keyup",
-  applyFilters
-);
-
-statusFilter.addEventListener(
-  "change",
-  applyFilters
-);
-
-// =========================
-// EXPORT EXCEL
-// =========================
-
-function exportToExcel() {
-
-  const worksheet =
-    XLSX.utils.json_to_sheet(
-      feedbackData
-    );
-
-  const workbook =
-    XLSX.utils.book_new();
-
-  XLSX.utils.book_append_sheet(
-    workbook,
-    worksheet,
-    "RCCG Report"
-  );
-
-  XLSX.writeFile(
-    workbook,
-    "RCCG_New_Convert_Report.xlsx"
-  );
-
-}
-
-// =========================
-// INIT
-// =========================
-
-loadDashboard();
-
-// =========================
-// ADMIN LOGIN SYSTEM
-// ONLY EMAILS IN ADMINS TABLE
-// =========================
-
-const adminLoginForm =
-  document.getElementById("adminLoginForm");
-
-if (adminLoginForm) {
-
-  adminLoginForm.addEventListener(
-    "submit",
-    async function (e) {
-
-      e.preventDefault();
-
-      const loginBtn =
-        document.getElementById("loginBtn");
-
-      const loginMessage =
-        document.getElementById("loginMessage");
-
-      loginBtn.disabled = true;
-
-      loginBtn.innerHTML = `
-        <span class="spinner-border spinner-border-sm"></span>
-        Authenticating...
-      `;
-
-      loginMessage.innerHTML = "";
-
-      const email =
-        document
-          .getElementById("adminEmail")
-          .value
-          .trim();
-
-      const password =
-        document
-          .getElementById("adminPassword")
-          .value;
+    async function loadMetrics() {
+      const metricStatus = document.getElementById("metricStatus");
+      metricStatus.innerText = "Refreshing Google Sheet counters...";
 
       try {
+        const [totalConverts, visitedChurch] = await Promise.all([
+          getSheetRecordCount(TOTAL_CONVERT_SHEET_ID),
+          getSheetRecordCount(VISITED_CHURCH_SHEET_ID)
+        ]);
 
-        // =========================
-        // LOGIN TO SUPABASE AUTH
-        // =========================
-
-        const {
-          data,
-          error
-        } = await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
-
-        if (error) {
-          throw error;
-        }
-
-        // =========================
-        // CHECK ADMINS TABLE
-        // =========================
-
-        const {
-          data: adminData,
-          error: adminError
-        } = await supabaseClient
-          .from("admins")
-          .select("*")
-          .eq("email", email)
-          .maybeSingle();
-
-        if (adminError) {
-          throw adminError;
-        }
-
-        // =========================
-        // NOT ADMIN
-        // =========================
-
-        if (!adminData) {
-
-          await supabaseClient.auth.signOut();
-
-          loginMessage.innerHTML = `
-            <div class="alert alert-danger rounded-4">
-              Access denied. You are not an admin.
-            </div>
-          `;
-
-          loginBtn.disabled = false;
-
-          loginBtn.innerHTML =
-            "Login";
-
-          return;
-
-        }
-
-        // =========================
-        // SAVE SESSION
-        // =========================
-
-        localStorage.setItem(
-          "adminLoggedIn",
-          "true"
-        );
-
-        localStorage.setItem(
-          "adminEmail",
-          email
-        );
-
-        // =========================
-        // REDIRECT
-        // =========================
-
-        window.location.href =
-          "admin.html";
-
-      } catch (err) {
-
-        console.error(err);
-
-        loginMessage.innerHTML = `
-          <div class="alert alert-danger rounded-4">
-            ${err.message}
-          </div>
-        `;
-
-        loginBtn.disabled = false;
-
-        loginBtn.innerHTML =
-          "Login";
-
+        renderMetrics(totalConverts, visitedChurch);
+        metricStatus.innerText = `Last updated: ${new Date().toLocaleString()}`;
+      } catch (error) {
+        console.error(error);
+        metricStatus.innerText = "Unable to refresh counters. Confirm the Google Sheets are shared publicly or published to the web.";
+        metricStatus.classList.remove("text-muted");
+        metricStatus.classList.add("text-danger");
       }
-
     }
-  );
 
-}
+    function refreshDashboard() {
+      refreshReport();
+      loadMetrics();
+    }
 
-// =========================
-// ADMIN PAGE PROTECTION
-// =========================
+    function logoutAdmin() {
+      localStorage.removeItem("adminLoggedIn");
+      localStorage.removeItem("adminEmail");
+      window.location.href = "login.html";
+    }
 
-const isAdminPage =
-  window.location.pathname.includes(
-    "admin.html"
-  );
+    if (!localStorage.getItem("adminLoggedIn")) {
+      window.location.href = "login.html";
+    }
 
-if (isAdminPage) {
+    window.addEventListener("focus", refreshDashboard);
+    setInterval(refreshDashboard, LIVE_REFRESH_INTERVAL_MS);
+    loadMetrics();
+  </script>
 
-  const loggedIn =
-    localStorage.getItem(
-      "adminLoggedIn"
-    );
-
-  if (!loggedIn) {
-
-    window.location.href =
-      "login.html";
-
-  }
-
-}
-
-// =========================
-// LOGOUT SYSTEM
-// =========================
-
-async function logoutAdmin() {
-
-  await supabaseClient.auth.signOut();
-
-  localStorage.removeItem(
-    "adminLoggedIn"
-  );
-
-  localStorage.removeItem(
-    "adminEmail"
-  );
-
-  window.location.href =
-    "login.html";
-
-}
-
-
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
