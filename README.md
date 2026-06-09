@@ -74,7 +74,7 @@ Recommended message content:
 - Welcome the convert to the RCCG follow-up system.
 - Confirm that their information was received.
 - Encourage them spiritually.
-- Mention that the church team will follow up.
+- Mention that they should go to the nearest RCCG church to show the pastor the message to receive their study packs.
 - Include prayer, next steps, or service attendance information where applicable.
 
 ### Pastor Feedback Admin Workflow
