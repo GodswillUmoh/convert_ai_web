@@ -1,6 +1,6 @@
 # RCCG New Convert Follow-Up System
 
-RCCG New Convert Follow-Up System is a static web application for collecting new convert information, receiving pastor follow-up feedback, and viewing live administrative analytics.
+RCCG New Convert Follow-Up System is a web application for collecting new convert information, receiving pastor follow-up feedback, and viewing live administrative analytics.
 
 The application uses Bootstrap for the interface, Google Forms for public submissions, Google Sheets for dashboard counters, Looker Studio for embedded reporting, and Supabase on the login page for checking approved admin email addresses.
 
