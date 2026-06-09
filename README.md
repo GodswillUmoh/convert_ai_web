@@ -31,10 +31,60 @@ The application uses Bootstrap for the interface, Google Forms for public submis
 2. The registration form posts to a connected Google Form.
 3. A pastor submits follow-up information through `feedback.html`.
 4. The feedback form posts to a separate Google Form.
-5. `admin.html` displays the Looker Studio report.
-6. `admin.html` also fetches row counts from two Google Sheets and calculates:
+5. Zapier listens for new Google Form or Google Sheet responses and triggers email follow-up workflows.
+6. `admin.html` displays the Looker Studio report.
+7. `admin.html` also fetches row counts from two Google Sheets and calculates:
    - `Yet To Visit = Total Converts - Visited Church`
    - `Visited Rate = Visited Church / Total Converts * 100`
+
+## AI and Zapier Workflow
+
+Zapier can be used as the automation layer between Google Forms, AI-generated messaging, and email delivery.
+
+### New Convert Registration Workflow
+
+When a new convert submits `register.html`:
+
+1. Google Forms stores the new response.
+2. Zapier is triggered by a new form response or a new row in the linked Google Sheet.
+3. Zapier sends the convert's details to an AI step, such as OpenAI, to generate a warm welcome and follow-up message.
+4. Zapier sends the generated message by email to the convert.
+5. Optional: Zapier can also copy the record to another Google Sheet, CRM, or church follow-up list.
+
+Suggested email purpose:
+
+- Welcome the new convert.
+- Confirm their submission was received.
+- Encourage them spiritually.
+- Share next steps for follow-up, prayer, or church attendance.
+
+### Pastor Feedback Workflow
+
+When a pastor submits `feedback.html`:
+
+1. Google Forms stores the pastor feedback response.
+2. Zapier is triggered by the new response or linked Google Sheet row.
+3. Zapier sends the feedback details to an AI step to summarize the pastor's update.
+4. Zapier emails the summary to the admin team.
+5. Optional: Zapier can flag urgent cases, such as converts marked unreachable or not visited.
+
+Suggested admin email content:
+
+- Convert name and contact details.
+- Parish and pastor information.
+- Visit status.
+- Follow-up status.
+- AI-generated summary of the pastor's remark.
+- Recommended next action.
+
+### Recommended Zapier Zaps
+
+Create two separate Zaps:
+
+| Zap | Trigger | AI Step | Action |
+| --- | --- | --- | --- |
+| Convert Welcome Email | New Google Form response or new Google Sheet row from convert registration | Generate welcome/follow-up email | Send email to convert |
+| Pastor Feedback Alert | New Google Form response or new Google Sheet row from pastor feedback | Summarize feedback and recommend next action | Send email to admin |
 
 ## Dashboard Data Sources
 
