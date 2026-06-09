@@ -1,107 +1,144 @@
-# RCCG New Convert Follow-Up System
+# RCCG New Convert AI Follow-Up System
 
-RCCG New Convert Follow-Up System is a web application for collecting new convert information, receiving pastor follow-up feedback, and viewing live administrative analytics.
+RCCG New Convert AI Follow-Up System is a web application for collecting new convert details, receiving pastor follow-up feedback, automating email communication with AI, and monitoring live administrative analytics.
 
-The application uses Bootstrap for the interface, Google Forms for public submissions, Google Sheets for dashboard counters, Looker Studio for embedded reporting, and Supabase on the login page for checking approved admin email addresses.
+The system is designed around a simple ministry workflow: a new convert submits their information, Zapier triggers an AI-generated welcome or follow-up email, pastors submit feedback after contact or visitation, Zapier summarizes that feedback for admins, and the admin dashboard displays live reporting through Looker Studio and Google Sheet counters.
 
-## Features
+## What The Application Does
 
-- Public landing page for the RCCG new convert follow-up system.
-- New convert registration form.
-- Pastor feedback form for parish follow-up updates.
-- Admin dashboard with an embedded Looker Studio report.
-- Live counter cards for total converts, visited church, yet to visit, and visited percentage.
-- Admin access check using the `admins` table in Supabase.
-- Responsive layout for desktop and mobile devices.
+- Registers new converts through a public Google Form-powered web page.
+- Collects pastor feedback after church visit or follow-up.
+- Uses Zapier to trigger automated workflows when new form responses are received.
+- Uses AI through Zapier, such as OpenAI, to generate personalized emails and feedback summaries.
+- Sends welcome/follow-up emails to converts after registration.
+- Sends summarized pastor feedback emails to admins.
+- Displays live admin analytics using an embedded Looker Studio report.
+- Calculates dashboard counters from Google Sheets:
+  - Total converts
+  - Converts who visited church
+  - Converts yet to visit
+  - Visited percentage
+- Restricts admin dashboard access through an email check on the login page.
+
+## Application Flow
+
+1. A visitor opens `index.html` and chooses to register as a new convert.
+2. The new convert submits their details through `register.html`.
+3. The registration form sends the data to Google Forms and its connected Google Sheet.
+4. Zapier detects the new response.
+5. Zapier passes the convert details to an AI step to generate a warm welcome and follow-up email.
+6. Zapier sends the email to the convert.
+7. A pastor submits follow-up or visitation feedback through `feedback.html`.
+8. Zapier detects the pastor feedback submission.
+9. Zapier uses AI to summarize the pastor's report and recommend a next action.
+10. Zapier emails the summary to the admin team.
+11. Admins view live reporting through `admin.html`, which embeds Looker Studio and calculates summary counters from Google Sheets.
 
 ## Pages
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Landing page with project introduction and links to registration and admin dashboard. |
+| `index.html` | Landing page introducing the RCCG new convert follow-up system. |
 | `register.html` | New convert registration form submitted to Google Forms. |
 | `feedback.html` | Pastor feedback form submitted to Google Forms. |
-| `admin.html` | Main admin dashboard with Looker Studio report and Google Sheet counters. |
 | `login.html` | Admin access page that checks the submitted email against Supabase `admins`. |
+| `admin.html` | Main admin dashboard with Looker Studio report and Google Sheet counters. |
 | `success.html` | Confirmation page after successful form submission. |
 
-## Data Flow
+## AI and Zapier Automation
 
-1. A new convert submits details through `register.html`.
-2. The registration form posts to a connected Google Form.
-3. A pastor submits follow-up information through `feedback.html`.
-4. The feedback form posts to a separate Google Form.
-5. Zapier listens for new Google Form or Google Sheet responses and triggers email follow-up workflows.
-6. `admin.html` displays the Looker Studio report.
-7. `admin.html` also fetches row counts from two Google Sheets and calculates:
-   - `Yet To Visit = Total Converts - Visited Church`
-   - `Visited Rate = Visited Church / Total Converts * 100`
+Zapier acts as the automation bridge between Google Forms, AI, and email delivery.
 
-## AI and Zapier Workflow
+### Convert Welcome Workflow
 
-Zapier can be used as the automation layer between Google Forms, AI-generated messaging, and email delivery.
+Trigger:
 
-### New Convert Registration Workflow
+```text
+New Google Form response or new Google Sheet row from register.html
+```
 
-When a new convert submits `register.html`:
+AI action:
 
-1. Google Forms stores the new response.
-2. Zapier is triggered by a new form response or a new row in the linked Google Sheet.
-3. Zapier sends the convert's details to an AI step, such as OpenAI, to generate a warm welcome and follow-up message.
-4. Zapier sends the generated message by email to the convert.
-5. Optional: Zapier can also copy the record to another Google Sheet, CRM, or church follow-up list.
+```text
+Generate a personalized welcome and follow-up email for the new convert.
+```
 
-Suggested email purpose:
+Email action:
 
-- Welcome the new convert.
-- Confirm their submission was received.
+```text
+Send the generated email to the convert's email address.
+```
+
+Recommended message content:
+
+- Welcome the convert to the RCCG follow-up system.
+- Confirm that their information was received.
 - Encourage them spiritually.
-- Share next steps for follow-up, prayer, or church attendance.
+- Mention that the church team will follow up.
+- Include prayer, next steps, or service attendance information where applicable.
 
-### Pastor Feedback Workflow
+### Pastor Feedback Admin Workflow
 
-When a pastor submits `feedback.html`:
+Trigger:
 
-1. Google Forms stores the pastor feedback response.
-2. Zapier is triggered by the new response or linked Google Sheet row.
-3. Zapier sends the feedback details to an AI step to summarize the pastor's update.
-4. Zapier emails the summary to the admin team.
-5. Optional: Zapier can flag urgent cases, such as converts marked unreachable or not visited.
+```text
+New Google Form response or new Google Sheet row from feedback.html
+```
 
-Suggested admin email content:
+AI action:
+
+```text
+Summarize the pastor feedback and suggest a next follow-up action.
+```
+
+Email action:
+
+```text
+Send the AI-generated summary to the admin team.
+```
+
+Recommended admin email content:
 
 - Convert name and contact details.
-- Parish and pastor information.
+- Pastor name and parish.
 - Visit status.
 - Follow-up status.
-- AI-generated summary of the pastor's remark.
+- Pastor remark.
+- AI-generated summary.
 - Recommended next action.
 
-### Recommended Zapier Zaps
+## Recommended Zapier Zaps
 
-Create two separate Zaps:
-
-| Zap | Trigger | AI Step | Action |
+| Zap | Trigger | AI Step | Final Action |
 | --- | --- | --- | --- |
-| Convert Welcome Email | New Google Form response or new Google Sheet row from convert registration | Generate welcome/follow-up email | Send email to convert |
-| Pastor Feedback Alert | New Google Form response or new Google Sheet row from pastor feedback | Summarize feedback and recommend next action | Send email to admin |
+| Convert Welcome Email | New convert form response | Generate welcome/follow-up email | Send email to convert |
+| Pastor Feedback Alert | New pastor feedback response | Summarize feedback and recommend next action | Send email to admin |
 
-## Dashboard Data Sources
+## Dashboard and Reporting
 
-The admin dashboard currently uses these Google Sheet IDs:
+The admin dashboard combines an embedded Looker Studio report with live counter cards powered by Google Sheets.
+
+The embedded Looker Studio report is used for visual reporting:
+
+```text
+https://datastudio.google.com/embed/reporting/e1d9288c-1125-4b8d-a87f-db7c0aa0b767/page/vCd0F
+```
+
+The dashboard counters in `admin.html` use these Google Sheet IDs:
 
 ```js
 TOTAL_CONVERT_SHEET_ID = "1uUvoyH8xGhd_UuDheosXgqq2fcogSin-_MaAQZ8abds";
 VISITED_CHURCH_SHEET_ID = "16cvbzQZ_eeAsU2CYvGtvfevdgEjqyunp6y4Ybrm9JnI";
 ```
 
-The sheets must be shared publicly or published to the web so the browser can fetch CSV data from them.
+The dashboard calculates:
 
-The Looker Studio report is embedded in `admin.html` using:
-
-```html
-https://datastudio.google.com/embed/reporting/e1d9288c-1125-4b8d-a87f-db7c0aa0b767/page/vCd0F
+```text
+Yet To Visit = Total Converts - Visited Church
+Visited Rate = Visited Church / Total Converts * 100
 ```
+
+The Google Sheets must be shared publicly or published to the web so the browser can fetch CSV data.
 
 ## Admin Access
 
@@ -138,6 +175,8 @@ The user is then redirected to `admin.html`.
 - Google Forms
 - Google Sheets CSV output
 - Looker Studio embed
+- Zapier automation
+- AI-generated email and summary workflows
 - Supabase JavaScript client for admin email access
 
 ## Project Structure
@@ -163,7 +202,7 @@ convert_ai_web/
 
 This is a static web application. You can open `index.html` directly in a browser.
 
-For the best experience, run it through a local static server so browser requests behave like a deployed website.
+For the best experience, run it through a local static server.
 
 Example with Python:
 
@@ -177,16 +216,21 @@ Then open:
 http://localhost:8000
 ```
 
-## Setup Notes
+## Setup Checklist
 
-- Confirm the Google Form action URLs in `register.html` and `feedback.html`.
-- Confirm all Google Form field `entry.*` names match the live forms.
-- Confirm the Google Sheets used by `admin.html` are public or published.
-- Confirm the Looker Studio report allows embedding.
+- Confirm the Google Form action URL in `register.html`.
+- Confirm the Google Form action URL in `feedback.html`.
+- Confirm all Google Form `entry.*` field names match the live forms.
+- Connect each Google Form to the correct Google Sheet.
+- Publish or publicly share the Google Sheets used by the dashboard counters.
+- Configure the Looker Studio report and allow embedding.
+- Create the two Zapier workflows for convert welcome emails and pastor feedback admin alerts.
+- Configure the AI prompt used in each Zapier workflow.
+- Configure the sender email account in Zapier.
 - Confirm Supabase URL, anon key, and `admins` table settings in `login.html`.
 
-## Important Security Note
+## Security Note
 
-This is a frontend-only project. Any keys or URLs placed in HTML or JavaScript are visible to users in the browser.
+This is a frontend-only project. Any keys, sheet IDs, form URLs, or report links placed in HTML or JavaScript are visible in the browser.
 
-For stronger protection, move sensitive access control and data fetching to a backend service or serverless function.
+For stronger protection, move sensitive access control, private keys, and protected data fetching to a backend service or serverless function.
