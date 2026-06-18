@@ -402,11 +402,7 @@
       loadMetrics();
     }
 
-   
-
-    if (!localStorage.getItem("adminLoggedIn")) {
-      window.location.href = "login.html";
-    }
+  
 
     window.addEventListener("focus", refreshDashboard);
     setInterval(refreshDashboard, LIVE_REFRESH_INTERVAL_MS);
